@@ -1,0 +1,40 @@
+---
+const {
+  type = 'cluster',
+  cols = 4,
+  rows = 4,
+  a = 'bg-gold',
+  b = 'bg-lav',
+  hidden = [],
+  colorA = 'var(--ink)',
+  colorB = 'var(--cream)',
+  size = '40px',
+  class: className = '',
+} = Astro.props;
+
+const hiddenSet = new Set(hidden);
+
+const cells = Array.from({ length: rows }).flatMap((_, r) =>
+  Array.from({ length: cols }).map((__, c) => {
+    const isHidden = hiddenSet.has(`${r}-${c}`);
+    return {
+      key: `${r}-${c}`,
+      cls: isHidden ? 'cell' : `cell ${(r + c) % 2 === 0 ? a : b}`,
+    };
+  })
+);
+---
+
+{
+  type === 'cluster' ? (
+    <div class:list={['pixelgrid', className]} style={`--cols: ${cols}`} aria-hidden="true">
+      {cells.map((cell) => <div class={cell.cls} />)}
+    </div>
+  ) : (
+    <div
+      class:list={['checker-strip', className]}
+      style={`--ca: ${colorA}; --cb: ${colorB}; --csz: ${size};`}
+      aria-hidden="true"
+    />
+  )
+}

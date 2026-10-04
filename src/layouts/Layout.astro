@@ -137,7 +137,7 @@ const {
           });
         }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
 
-        document.querySelectorAll('.reveal, .reveal-h, .line-mask, [data-count]').forEach(function (el) {
+        document.querySelectorAll('.reveal, .reveal-h, .line-mask, .pixelgrid, [data-count]').forEach(function (el) {
           io.observe(el);
         });
 
