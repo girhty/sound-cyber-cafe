@@ -1,0 +1,103 @@
+---
+import Checker from './Checker.astro';
+import { BUSINESS, LOGO, POSTS } from '../data/content.js';
+---
+
+<section id="home" class="relative overflow-hidden bg-butter pb-32 pt-32 md:pb-40 md:pt-40">
+  <div class="hero-blob" aria-hidden="true"></div>
+  <Checker
+    type="cluster"
+    cols={7}
+    rows={6}
+    a="bg-gold"
+    b="bg-lav"
+    class="absolute right-4 top-24 hidden w-40 md:block lg:right-10"
+    hidden={['0-0', '1-6', '3-0', '5-6']}
+  />
+
+  <div class="relative mx-auto grid max-w-shell items-center gap-12 px-5 lg:grid-cols-12">
+    <div class="lg:col-span-6">
+      <p class="eyebrow text-ink/60">AL ADL · BAGHDAD · {BUSINESS.handle}</p>
+
+      <h1 class="hero-h mt-5 text-ink">
+        <span class="line-mask"><span>Press start.</span></span>
+        <span class="line-mask"><span>Stay awhile.</span></span>
+      </h1>
+
+      <p class="mt-6 max-w-md text-[15px] leading-relaxed text-ink/75">
+        {BUSINESS.services}. Pull up a chair at Sound Cyber Cafe — where Baghdad comes to
+        play, watch the match and stay out late.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-5">
+        <a class="btn" href={BUSINESS.maps} target="_blank" rel="noopener">
+          Get directions
+          <span class="btn-chip" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </span>
+        </a>
+        <a class="textlink" href={BUSINESS.tel}>
+          Call {BUSINESS.phone}
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="relative lg:col-span-6">
+      <div class="hero-shot hero-shot--main" data-parallax="0.05">
+        <img
+          src={POSTS[1].img}
+          alt="Player deep in the game at Sound Cyber Cafe"
+          width="640"
+          height="640"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-shot hero-shot--second" data-parallax="-0.04">
+        <img
+          src={POSTS[3].img}
+          alt="Billiard tables ready for a tournament at Sound Cyber Cafe"
+          width="640"
+          height="640"
+        />
+      </div>
+      <div class="prop prop--one" data-parallax="0.09">
+        <img src={POSTS[0].img} alt="" width="640" height="640" aria-hidden="true" />
+      </div>
+      <div class="prop prop--two" data-parallax="-0.07">
+        <img src={POSTS[2].img} alt="" width="640" height="640" aria-hidden="true" />
+      </div>
+      <span class="sticker sticker--pink">PS5</span>
+      <span class="sticker sticker--lav">PC</span>
+    </div>
+  </div>
+
+  <div class="relative mx-auto mt-14 max-w-shell px-5">
+    <dl class="stats reveal">
+      <div class="stat">
+        <dt class="sr-only">Google rating</dt>
+        <dd><span class="stat-num" data-count="5" data-dec="1">5.0</span></dd>
+        <p class="stat-label">Google rating <span class="text-star" aria-hidden="true">★</span></p>
+      </div>
+      <div class="stat">
+        <dt class="sr-only">Google reviews</dt>
+        <dd><span class="stat-num" data-count="15">0</span></dd>
+        <p class="stat-label">Google reviews</p>
+      </div>
+      <div class="stat">
+        <dt class="sr-only">Instagram followers</dt>
+        <dd><span class="stat-num" data-count="5015">0</span><span class="text-gold">+</span></dd>
+        <p class="stat-label">Followers on {BUSINESS.handle}</p>
+      </div>
+    </dl>
+  </div>
+
+  <img
+    src={LOGO}
+    alt=""
+    aria-hidden="true"
+    width="60"
+    height="60"
+    class="absolute bottom-6 left-6 hidden h-14 w-14 rotate-[-8deg] rounded-full border-[3px] border-cream object-cover shadow-[5px_5px_0_var(--pink)] xl:block"
+  />
+</section>

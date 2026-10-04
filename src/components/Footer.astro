@@ -1,0 +1,101 @@
+---
+import Checker from './Checker.astro';
+import { BUSINESS, LOGO, PHOTOS } from '../data/content.js';
+
+const quick = [
+  ['Home', '#home'],
+  ['About', '#about'],
+  ['Zones', '#zones'],
+  ['Experience', '#experience'],
+  ['Reviews', '#reviews'],
+];
+---
+
+<footer id="visit" class="relative overflow-hidden bg-ink pt-20 text-cream">
+  <Checker type="cluster" cols={6} rows={3} a="bg-gold" b="bg-cream" class="absolute left-6 top-6 w-28 opacity-80" hidden={['0-0', '2-5']} />
+
+  <div class="mx-auto grid max-w-shell gap-10 px-5 lg:grid-cols-12">
+    <div class="relative lg:col-span-4">
+      <div class="footer-shot">
+        <img src={PHOTOS[0].img} alt="Sound Cyber Cafe in Al Adl, Baghdad" width="700" height="700" loading="lazy" />
+      </div>
+      <span class="sticker sticker--pink footer-sticker">GAME ON</span>
+    </div>
+
+    <div class="flex flex-col gap-6 lg:col-span-5">
+      <div class="info-card info-card--cream">
+        <p class="eyebrow text-ink/60">FIND US</p>
+        <p class="info-display text-ink">{BUSINESS.address}</p>
+        <a class="round-chip round-chip--lav" href={BUSINESS.maps} target="_blank" rel="noopener" aria-label="Open address in Google Maps">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+        </a>
+      </div>
+
+      <div class="info-card info-card--gold">
+        <p class="eyebrow text-ink/60">SEE YOU THERE</p>
+        <p class="info-display text-ink">Hours not listed yet</p>
+        <p class="mt-2 max-w-xs text-sm text-ink/75">
+          Google hasn’t published opening hours for Sound Cyber Cafe — ring us before you head
+          over and we’ll confirm.
+        </p>
+        <a class="round-chip round-chip--pink" href={BUSINESS.tel} aria-label={`Call ${BUSINESS.phone}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.8a2 2 0 0 1 1.7 2Z" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-3">
+      <a class="hello-tab" href={BUSINESS.instagram} target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
+        <span>SAY HELLO</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-16 max-w-shell border-t border-cream/15 px-5 py-10">
+    <div class="grid gap-10 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-3">
+          <img src={LOGO} alt={`${BUSINESS.name} logo`} width="52" height="52" class="h-12 w-12 rounded-full border-2 border-cream object-cover" loading="lazy" />
+          <span class="font-display text-2xl uppercase leading-none">{BUSINESS.name}</span>
+        </div>
+        <p class="mt-4 max-w-sm text-sm text-cream/70">
+          Cyber cafe, gaming rooms, cinema and billiard in Al Adl, Baghdad.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-2.5">
+          <a class="social" href={BUSINESS.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" /></svg>
+          </a>
+          <a class="social" href={BUSINESS.tel} aria-label={`Call ${BUSINESS.phone}`}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.8a2 2 0 0 1 1.7 2Z" /></svg>
+          </a>
+          <a class="social" href={BUSINESS.maps} target="_blank" rel="noopener" aria-label="Directions">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="md:col-span-3" aria-label="Quick links">
+        <p class="eyebrow text-gold">QUICK LINK</p>
+        <ul class="mt-4 space-y-2.5">
+          {quick.map(([label, href]) => (
+            <li><a class="footlink" href={href}>{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="md:col-span-4">
+        <p class="eyebrow text-gold">VISIT</p>
+        <ul class="mt-4 space-y-3 text-sm text-cream/75">
+          <li>{BUSINESS.address}</li>
+          <li><a class="footlink" href={BUSINESS.tel}>{BUSINESS.phone}</a></li>
+          <li><a class="footlink" href={BUSINESS.instagram} target="_blank" rel="noopener">{BUSINESS.handle}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="mono mt-10 text-xs uppercase tracking-widest text-cream/45">
+      © {new Date().getFullYear()} {BUSINESS.name} — Al Adl, Baghdad. All rights reserved.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Ribbon from '../components/Ribbon.astro';
+import Checker from '../components/Checker.astro';
+import About from '../components/About.astro';
+import Signature from '../components/Signature.astro';
+import Experience from '../components/Experience.astro';
+import Craft from '../components/Craft.astro';
+import Reviews from '../components/Reviews.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
+import Footer from '../components/Footer.astro';
+import { MARQUEE_ONE, MARQUEE_TWO, STEPS } from '../data/content.js';
+---
+
+<Layout>
+  <Hero />
+  <Ribbon words={MARQUEE_ONE} tone="pink" tilt="-2.4deg" />
+  <About />
+  <Signature />
+  <Experience />
+  <Craft />
+  <Reviews />
+  <InstagramFeed />
+  <Ribbon words={MARQUEE_TWO} tone="gold" reverse tilt="2.4deg" />
+  <Footer />
+</Layout>
+
+<script type="application/json" id="craft-data" is:inline set:html={JSON.stringify(STEPS)} />

@@ -1,0 +1,28 @@
+---
+import { GALLERY, PHOTOS } from '../data/content.js';
+---
+
+<section id="about" class="relative overflow-hidden bg-cream py-24 md:py-36">
+  <figure class="float-photo float-photo--left reveal" aria-hidden="false">
+    <img src={GALLERY[2].img} alt="Inside Sound Cyber Cafe, Al Adl" loading="lazy" width="640" height="640" />
+  </figure>
+  <figure class="float-photo float-photo--right reveal">
+    <img src={PHOTOS[3].img} alt="Gaming floor at Sound Cyber Cafe" loading="lazy" width="640" height="640" />
+  </figure>
+
+  <div class="mx-auto max-w-4xl px-5 text-center">
+    <p class="eyebrow text-ink/55">ABOUT US</p>
+    <p class="manifesto mt-6 text-ink">
+      Sound is not just a place to play. It is where Baghdad meets up, plays loud and stays
+      late — PC, PS5, cinema, billiard and good coffee.
+    </p>
+    <div class="mt-9 flex justify-center">
+      <a class="btn" href="#zones">
+        See the zones
+        <span class="btn-chip" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

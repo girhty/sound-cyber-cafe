@@ -1,0 +1,17 @@
+---
+const { words = [], tone = 'pink', reverse = false, tilt = '-2.2deg' } = Astro.props;
+const bg = tone === 'pink' ? 'bg-pink' : 'bg-gold';
+const line = [...words, ...words];
+---
+
+<div class:list={['ribbon', bg, { 'ribbon--rev': reverse }]} style={`--tilt:${tilt}`} aria-hidden="true">
+  <div class="marquee">
+    {[0, 1].map(() => (
+      <div class="marquee-track">
+        {line.map((w) => (
+          <span class="ribbon-word">{w}<i class="ribbon-star">✦</i></span>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

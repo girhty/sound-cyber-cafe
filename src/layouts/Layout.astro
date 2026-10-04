@@ -1,0 +1,302 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import { BUSINESS, LOGO } from '../data/content.js';
+
+const {
+  title = 'Sound Cyber Cafe — PC, PS5, Cinema & Billiard in Al Adl, Baghdad',
+  description = 'Sound Cyber Cafe in Al Adl, Baghdad: PC gaming zone, PS5 rooms, cinema rooms and billiard. Rated 5.0 on Google. Call 07806464646.',
+} = BUSINESS;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1B1630" />
+
+    <meta property="og:type" content="business.business" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={LOGO} />
+    <meta property="og:url" content="https://sound-cyber-cafe.example/" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={LOGO} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'EntertainmentBusiness',
+        name: BUSINESS.name,
+        image: LOGO,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Al Adl',
+          addressLocality: 'Baghdad',
+          addressRegion: 'Baghdad Governorate',
+          postalCode: '10069',
+          addressCountry: 'IQ',
+        },
+        telephone: BUSINESS.phone,
+        sameAs: [BUSINESS.instagram],
+        url: 'https://sound-cyber-cafe.example/',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: BUSINESS.rating,
+          reviewCount: BUSINESS.reviewCount,
+        },
+        makesOffer: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'PC gaming' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'PS5 rooms' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cinema rooms' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Billiard' } },
+        ],
+      })}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+
+    <script is:inline>
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ---------- sticky nav ---------- */
+        var nav = document.getElementById('nav');
+        var onScroll = function () {
+          if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 24);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        /* ---------- mobile menu ---------- */
+        var menu = document.getElementById('mobileMenu');
+        var btn = document.getElementById('menuBtn');
+        var close = document.getElementById('menuClose');
+        var setMenu = function (open) {
+          if (!menu || !btn) return;
+          menu.classList.toggle('is-open', open);
+          menu.classList.toggle('hidden', !open);
+          menu.classList.toggle('flex', open);
+          btn.setAttribute('aria-expanded', String(open));
+          document.body.style.overflow = open ? 'hidden' : '';
+        };
+        btn && btn.addEventListener('click', function () { setMenu(true); });
+        close && close.addEventListener('click', function () { setMenu(false); });
+        menu && menu.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () { setMenu(false); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') setMenu(false);
+        });
+
+        /* ---------- reveal on scroll ---------- */
+        var counted = new WeakSet();
+        var countUp = function (el) {
+          if (counted.has(el)) return;
+          counted.add(el);
+          var target = parseFloat(el.dataset.count);
+          var dec = el.dataset.dec === '1';
+          if (reduce) { el.textContent = dec ? target.toFixed(1) : target.toLocaleString(); return; }
+          var start = null, dur = 1300;
+          var step = function (ts) {
+            if (!start) start = ts;
+            var p = Math.min((ts - start) / dur, 1);
+            var e = 1 - Math.pow(1 - p, 3);
+            var v = target * e;
+            el.textContent = dec ? v.toFixed(1) : Math.round(v).toLocaleString();
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        };
+
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('in');
+            if (entry.target.hasAttribute('data-count')) countUp(entry.target);
+            entry.target.querySelectorAll && entry.target.querySelectorAll('[data-count]').forEach(countUp);
+            io.unobserve(entry.target);
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-h, .line-mask, [data-count]').forEach(function (el) {
+          io.observe(el);
+        });
+
+        /* ---------- product / zone carousel ---------- */
+        var car = document.querySelector('[data-carousel]');
+        if (car) {
+          var cards = Array.prototype.slice.call(car.querySelectorAll('[data-card]'));
+          var idxLabel = document.querySelector('[data-index]');
+          var active = 1;
+          var mid = 1;
+          var apply = function () {
+            cards.forEach(function (card, i) {
+              var isActive = i === active;
+              card.classList.toggle('is-active', isActive);
+              card.setAttribute('aria-selected', String(isActive));
+              var order = ((i - active + mid) % cards.length + cards.length) % cards.length;
+              card.style.order = order;
+            });
+            car.setAttribute('aria-activedescendant', 'zone-' + active);
+            if (idxLabel) idxLabel.textContent = String(active + 1).padStart(2, '0');
+          };
+          cards.forEach(function (card, i) {
+            card.id = 'zone-' + i;
+            card.addEventListener('click', function () { active = i; apply(); });
+            card.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = i; apply(); }
+            });
+          });
+          var prev = document.querySelector('[data-prev]');
+          var next = document.querySelector('[data-next]');
+          prev && prev.addEventListener('click', function () {
+            active = (active - 1 + cards.length) % cards.length; apply();
+          });
+          next && next.addEventListener('click', function () {
+            active = (active + 1) % cards.length; apply();
+          });
+          apply();
+        }
+
+        /* ---------- gallery ---------- */
+        var gal = document.querySelector('[data-gallery]');
+        if (gal) {
+          var slides = gal.querySelectorAll('[data-slide]');
+          var thumbs = gal.querySelectorAll('[data-thumb]');
+          var gc = gal.querySelector('[data-gcount]');
+          var show = function (n) {
+            slides.forEach(function (s, i) { s.classList.toggle('is-on', i === n); });
+            thumbs.forEach(function (t, i) {
+              t.classList.toggle('is-on', i === n);
+              t.setAttribute('aria-selected', String(i === n));
+            });
+            if (gc) gc.textContent = String(n + 1).padStart(2, '0');
+          };
+          thumbs.forEach(function (t, i) {
+            t.addEventListener('click', function () { show(i); });
+          });
+        }
+
+        /* ---------- craft tabs ---------- */
+        var craft = document.querySelector('[data-craft]');
+        if (craft) {
+          var data = JSON.parse(document.getElementById('craft-data').textContent);
+          var tabs = craft.querySelectorAll('[data-tab]');
+          var badge = craft.querySelector('[data-badge]');
+          var label = craft.querySelector('[data-label]');
+          var title = craft.querySelector('[data-title]');
+          var text = craft.querySelector('[data-text]');
+          var img = craft.querySelector('[data-img]');
+          var setStep = function (n) {
+            tabs.forEach(function (t, i) {
+              t.classList.toggle('is-on', i === n);
+              t.setAttribute('aria-selected', String(i === n));
+            });
+            var d = data[n];
+            craft.classList.add('is-swapping');
+            window.setTimeout(function () {
+              badge.textContent = '0' + (n + 1);
+              label.textContent = d.label;
+              title.textContent = d.title;
+              text.textContent = d.text;
+              img.src = d.img;
+              img.alt = d.alt;
+              craft.classList.remove('is-swapping');
+            }, reduce ? 0 : 180);
+          };
+          tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { setStep(i); });
+          });
+        }
+
+        /* ---------- reviews ---------- */
+        var feat = document.querySelector('[data-featured]');
+        if (feat) {
+          var fName = document.getElementById('fName');
+          var fQuote = document.getElementById('fQuote');
+          var fStars = document.getElementById('fStars');
+          var fTag = document.getElementById('fTag');
+          var fInit = document.getElementById('fInitials');
+          var fAvatar = document.getElementById('fAvatar');
+          document.querySelectorAll('[data-mini]').forEach(function (mini) {
+            mini.addEventListener('click', function () {
+              var prevData = {
+                name: fName.textContent,
+                quote: fQuote.textContent,
+                rating: fStars.textContent.length,
+                tag: fTag.textContent,
+                initials: fInit.textContent,
+                tint: fAvatar.dataset.tint
+              };
+              var newQuote = mini.dataset.quote
+                ? '“' + mini.dataset.quote + '”'
+                : '★★★★★ — rated 5 stars on Google, no written review.';
+              fName.textContent = mini.dataset.name;
+              fQuote.textContent = newQuote;
+              fStars.textContent = '★'.repeat(parseInt(mini.dataset.rating, 10));
+              fStars.setAttribute('aria-label', mini.dataset.rating + ' out of 5 stars');
+              fTag.textContent = mini.dataset.tag;
+              fInit.textContent = mini.dataset.initials;
+              fAvatar.dataset.tint = mini.dataset.tint;
+              fAvatar.className = 'fr-avatar ' + mini.dataset.tint;
+
+              mini.querySelector('.rm-name').textContent = prevData.name;
+              mini.querySelector('.rm-quote').textContent = prevData.quote;
+              mini.querySelector('.rm-stars').textContent = '★'.repeat(prevData.rating);
+              mini.querySelector('.rm-tag').textContent = prevData.tag;
+              mini.querySelector('.rm-avatar').textContent = prevData.initials;
+              mini.dataset.name = prevData.name;
+              mini.dataset.quote = '';
+              mini.dataset.rating = prevData.rating;
+              mini.dataset.initials = prevData.initials;
+              mini.dataset.tint = prevData.tint;
+
+              feat.classList.remove('is-swap');
+              void feat.offsetWidth;
+              feat.classList.add('is-swap');
+            });
+          });
+        }
+
+        /* ---------- gentle parallax ---------- */
+        if (!reduce) {
+          var pxEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+          var ticking = false;
+          var update = function () {
+            var vh = window.innerHeight;
+            pxEls.forEach(function (el) {
+              var r = el.getBoundingClientRect();
+              var speed = parseFloat(el.dataset.parallax);
+              var offset = (r.top + r.height / 2 - vh / 2) * speed;
+              el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+            });
+            ticking = false;
+          };
+          window.addEventListener('scroll', function () {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+          }, { passive: true });
+          update();
+        }
+      })();
+    </script>
+  </body>
+</html>

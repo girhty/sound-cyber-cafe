@@ -1,0 +1,47 @@
+---
+const { zone, index = 0, active = false } = Astro.props;
+---
+
+<article
+  data-card={index}
+  class:list={['pcard', { 'is-active': active }]}
+  role="option"
+  tabindex="0"
+  aria-selected={active ? 'true' : 'false'}
+>
+  <div class="pcard-pic">
+    <img src={zone.img} alt={zone.alt} width="640" height="640" loading="lazy" />
+  </div>
+
+  <span class="pcard-chip pcard-chip--side">ZONE 0{index + 1}</span>
+  <span class="pcard-chip pcard-chip--feature">ASK AT THE DESK</span>
+
+  <h3 class="pcard-name">{zone.name}</h3>
+  <p class="pcard-desc">{zone.desc}</p>
+  <p class="pcard-note">{zone.note}</p>
+
+  <div class="only-active">
+    <ul class="amenity" aria-label={`Amenities in ${zone.name}`}>
+      <li>PC</li>
+      <li>PS5</li>
+      <li>CINEMA</li>
+      <li>BILLIARD</li>
+    </ul>
+
+    <div class="meter" aria-hidden="true">
+      <span class="meter-bar"><i style="left:62%"></i></span>
+      <span class="meter-labels"><em>CHILL</em><em>HYPE</em></span>
+    </div>
+
+    <a class="btn btn--dark btn--full" href="tel:+9647806464646">
+      Call to book
+      <span class="btn-chip btn-chip--gold" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </span>
+    </a>
+  </div>
+
+  <div class="only-side">
+    <a class="mini-btn" href="tel:+9647806464646">Plan a visit</a>
+  </div>
+</article>

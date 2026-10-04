@@ -1,0 +1,77 @@
+---
+import Checker from './Checker.astro';
+import { REVIEWS, BUSINESS } from '../data/content.js';
+
+const initials = (name) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('');
+
+const featured = REVIEWS[0];
+const rest = REVIEWS.slice(1);
+const stars = (n) => '★'.repeat(n);
+---
+
+<section id="reviews" class="relative bg-cream pb-24 pt-0 md:pb-32">
+  <Checker
+    type="strip"
+    colorA="rgba(27,22,48,0.12)"
+    colorB="transparent"
+    size="40px"
+    class="mb-16 h-10 opacity-70"
+  />
+
+  <div class="mx-auto max-w-shell px-5">
+    <div class="text-center">
+      <p class="eyebrow text-ink/55">CUSTOMER REVIEWS</p>
+      <h2 class="reveal-h mt-4 text-ink">A few words<br />from our people.</h2>
+      <p class="mono mt-5 inline-flex items-center gap-2 rounded-full border-2 border-ink bg-butter px-4 py-1.5 text-xs uppercase tracking-widest">
+        <span class="text-star" aria-hidden="true">★</span>
+        {BUSINESS.rating.toFixed(1)} on Google · {BUSINESS.reviewCount} reviews
+      </p>
+    </div>
+
+    <article class="feature-review reveal" id="featuredReview" data-featured>
+      <div class="fr-avatar" id="fAvatar" data-tint={featured.tint}>
+        <span id="fInitials">{initials(featured.name)}</span>
+      </div>
+      <div class="fr-body">
+        <p class="fr-stars" id="fStars" aria-label={`${featured.rating} out of 5 stars`}>
+          {stars(featured.rating)}
+        </p>
+        <blockquote class="fr-quote" id="fQuote">“{featured.quote}”</blockquote>
+        <p class="fr-meta">
+          <span id="fName">{featured.name}</span>
+          <span id="fTag" class="mono">{featured.tag}</span>
+        </p>
+      </div>
+      <span class="fr-mark" aria-hidden="true">”</span>
+    </article>
+
+    <div class="review-row reveal">
+      {rest.map((r) => (
+        <button
+          class="review-mini"
+          data-mini
+          data-name={r.name}
+          data-quote={r.quote}
+          data-rating={r.rating}
+          data-tag={r.tag}
+          data-tint={r.tint}
+          data-initials={initials(r.name)}
+        >
+          <span class:list={['rm-avatar', r.tint]}>{initials(r.name)}</span>
+          <span class="rm-stars" aria-label={`${r.rating} out of 5 stars`}>{stars(r.rating)}</span>
+          <span class="rm-quote">
+            {r.quote ? `“${r.quote}”` : 'Rated 5 stars on Google — no written review.'}
+          </span>
+          <span class="rm-name">{r.name}</span>
+          <span class="rm-tag mono">{r.tag}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
